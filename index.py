@@ -1,3 +1,4 @@
+from os import path
 from tkinter import Tk, LabelFrame, Label, Entry, Button, ttk
 import sqlite3 
 
@@ -34,7 +35,13 @@ class Product:
         self.tree.grid(row = 1, column = 0, columnspan = 2)
         self.tree.heading('#0', text = 'Name')
         self.tree.heading('#1', text = 'Price')
+        
+        # Buttons
+        ttk.Button(text = 'Delete').grid(row = 2, column = 0, pady = 10, sticky = 'W E')
+        ttk.Button(text = 'Update').grid(row = 2, column = 1, pady = 10, sticky = 'W E')
+        ttk.Button(text = 'Close', command = self.wind.quit).grid(row = 3, column = 0, columnspan = 2, sticky = 'W E')
 
+        # Filling the Row
         self.get_products()
     
     def run_query(self, query, parameters = ()):
