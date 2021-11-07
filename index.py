@@ -2,7 +2,7 @@ from tkinter import Tk, LabelFrame, Label, Entry, Button, ttk
 import sqlite3 
 
 class Product:
-    db_name = 'database.db'
+    db_name = 'db/database.db'
     def __init__(self, window):
         self.wind = window
         self.wind.title('Products Application')
