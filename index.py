@@ -8,7 +8,7 @@ class Product:
         self.wind.title('Products Application')
 
         # Creating a Frame Container
-        frame = LabelFrame(self.wind, text = 'Register A new Product')
+        frame = LabelFrame(self.wind, text = 'Register A new Product', borderwidth = 0)
         frame.grid(row = 0, column = 0, columnspan = 3, pady = 20)
         
         # Name Input
@@ -26,12 +26,12 @@ class Product:
         ttk.Button(frame, text = 'Save Product', command = self.add_product).grid(row = 3, columnspan = 2, sticky = 'W E')
 
         # Output Messages
-        self.message = Label(text = '', fg = 'red')
-        self.message.grid(row = 3, column = 0, columnspan = 2, sticky = 'W E')
+        self.message = Label(frame, text = '', fg = 'red')
+        self.message.grid(row = 4, column = 0, columnspan = 2,sticky = 'W E')
 
         # Table
         self.tree = ttk.Treeview(height = 10, columns = 2)
-        self.tree.grid(row = 4, column = 0, columnspan = 2)
+        self.tree.grid(row = 1, column = 0, columnspan = 2)
         self.tree.heading('#0', text = 'Name')
         self.tree.heading('#1', text = 'Price')
 
