@@ -6,25 +6,25 @@ class Product:
     db_name = 'db/database.db'
     def __init__(self, window):
         self.wind = window
-        self.wind.title('Products Application')
+        self.wind.title('Administración de ingresos')
 
         # Creating a Frame Container
-        frame = LabelFrame(self.wind, text = 'Register A new Product', borderwidth = 0)
+        frame = LabelFrame(self.wind, text = 'Nuevo registro', borderwidth = 0)
         frame.grid(row = 0, column = 0, columnspan = 3, pady = 20)
         
         # Name Input
-        Label(frame, text = 'Name: ').grid(row = 1, column = 0)
-        self.name = Entry(frame)
-        self.name.focus()
-        self.name.grid(row = 1, column = 1)
+        Label(frame, text = 'Ingreso: ').grid(row = 1, column = 0)
+        self.entry = Entry(frame)
+        self.entry.focus()
+        self.entry.grid(row = 1, column = 1)
 
         # Price Input
-        Label(frame, text = 'Price: ').grid(row = 2, column = 0)
-        self.price = Entry(frame)
-        self.price.grid(row = 2, column = 1)
+        Label(frame, text = 'Importe: ').grid(row = 2, column = 0)
+        self.amount = Entry(frame)
+        self.amount.grid(row = 2, column = 1)
 
         # Button Add Product
-        ttk.Button(frame, text = 'Save Product', command = self.add_product).grid(row = 3, columnspan = 2, sticky = 'W E')
+        ttk.Button(frame, text = 'Guardar', command = self.add_product).grid(row = 3, columnspan = 2, sticky = 'W E')
 
         # Output Messages
         self.message = Label(frame, text = '', fg = 'red')
@@ -33,13 +33,13 @@ class Product:
         # Table
         self.tree = ttk.Treeview(height = 10, columns = 2)
         self.tree.grid(row = 1, column = 0, columnspan = 2)
-        self.tree.heading('#0', text = 'Name')
-        self.tree.heading('#1', text = 'Price')
+        self.tree.heading('#0', text = 'Ingreso')
+        self.tree.heading('#1', text = 'Importe')
         
         # Buttons
-        ttk.Button(text = 'Delete').grid(row = 2, column = 0, pady = 10, sticky = 'W E')
-        ttk.Button(text = 'Update').grid(row = 2, column = 1, pady = 10, sticky = 'W E')
-        ttk.Button(text = 'Close', command = self.wind.quit).grid(row = 3, column = 0, columnspan = 2, sticky = 'W E')
+        ttk.Button(text = 'Eliminar').grid(row = 2, column = 0, pady = 10, sticky = 'W E')
+        ttk.Button(text = 'Actualizar').grid(row = 2, column = 1, pady = 10, sticky = 'W E')
+        ttk.Button(text = 'Cerrar', command = self.wind.quit).grid(row = 3, column = 0, columnspan = 2, sticky = 'W E')
 
         # Filling the Row
         self.get_products()
@@ -57,7 +57,7 @@ class Product:
         for element in records: self.tree.delete(element)
 
         # Query data
-        query = 'SELECT * FROM product ORDER BY name DESC'
+        query = 'SELECT * FROM data ORDER BY entry DESC'
         db_rows = self.run_query(query)
 
         # Fulling data
@@ -65,18 +65,18 @@ class Product:
             self.tree.insert('', 0, text = row[1], values = row[2])
     
     def validation(self):
-        return len(self.name.get()) != 0 and len(self.price.get()) != 0
+        return len(self.entry.get()) != 0 and len(self.amount.get()) != 0
 
     def add_product(self):
         if self.validation():
-            query = 'INSERT INTO product VALUES(NULL, ?, ?)'
-            parameters = (self.name.get(), self.price.get())
+            query = 'INSERT INTO data VALUES(NULL, ?, ?)'
+            parameters = (self.entry.get(), self.amount.get())
             self.run_query(query, parameters)
-            self.message['text'] = 'Product {} added Successfully'.format(self.name.get())
-            self.name.delete(0, len(self.name.get()))
-            self.price.delete(0, len(self.price.get()))
+            self.message['text'] = '{} agregado correctamente'.format(self.entry.get())
+            self.entry.delete(0, len(self.entry.get()))
+            self.amount.delete(0, len(self.amount.get()))
         else:
-            self.message['text'] = 'Name and price is requiered'
+            self.message['text'] = 'Se requiere ingreso e importe'
         self.get_products()
 
 if __name__ == '__main__':
